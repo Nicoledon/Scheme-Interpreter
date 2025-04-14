@@ -345,7 +345,15 @@ def report_progress(typed, source, user_id, upload):
     0.2
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    count = 0
+    for i in range(0,len(typed)):
+        if typed[i] != source[i]:
+            break
+        count +=1
+    factor = count / len(source)
+    d = {'id':user_id,'progress':factor}
+    upload(d)
+    return factor 
     # END PROBLEM 8
 
 
@@ -370,10 +378,22 @@ def time_per_word(words, timestamps_per_player):
     tpp = timestamps_per_player  # A shorter name (for convenience)
     # BEGIN PROBLEM 9
     times = []  # You may remove this line
+    for i in range(0,len(tpp)):
+        temp = []
+        for j in range(1,len(tpp[i])):
+            temp.append(tpp[i][j]-tpp[i][j-1])
+        print("DEBUG temp :",temp)
+        times.append(temp)
     # END PROBLEM 9
     return {'words': words, 'times': times}
 
-
+def find_min(times,player_num,word_indices):
+    ans = []
+    for i in player_num:
+        ans.append(get_time(times,i,word_indices))
+    print("DEBUG ans:" ,min(ans))
+    return min(ans)
+        
 def fastest_words(words_and_times):
     """Return a list of lists indicating which words each player typed fastest.
     In case of a tie, the player with the lower index is considered to be the one who typed it the fastest.
@@ -397,7 +417,21 @@ def fastest_words(words_and_times):
     player_indices = range(len(times))  # contains an *index* for each player
     word_indices = range(len(words))    # contains an *index* for each word
     # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***" 
+    ans = []
+    container = []
+    for i in player_indices:
+        ans.append([])
+    for i in player_indices:
+        for j in word_indices:
+            if words[j] in container:
+               continue
+            mini = find_min(times,player_indices,j)
+            num  = get_time(times,i,j)
+            if num == mini :
+               ans[i].append(words[j])     
+               container.append(words[j])
+    return ans
     # END PROBLEM 10
 
 
