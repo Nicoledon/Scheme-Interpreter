@@ -35,12 +35,9 @@ def buy(fruits_to_buy, prices, total_amount):
                     continue
                 s += prices[elem]
             price = prices[fruit]
-            print("DEBUG fruit , s :",fruit,s)
             for k in  range(price , amount - s + 1):
                 # Hint: The display function will help you add fruit to the cart.
-                print("DEBUG k, price",k,price)
                 if k % price == 0:
-                   print("DEBUG:fruit:",fruit)
                    add(fruits[1:],amount - k, cart + display(fruit,k // price))
     add(fruits_to_buy, total_amount, '')
 

@@ -14,19 +14,17 @@ def shuffle(s):
     assert len(s) % 2 == 0, 'len(seq) must be even'
     "*** YOUR CODE HERE ***"
     first = [s[i] for i in range(0,len(s)//2)]
-    second = [s[i] for i in range(len(s)//2 ,len(s))]
+    second= [s[i] for i in range(len(s)//2,len(s))]
     print("DEBUG first:",first)
     print("DEBUG second:",second)
-    ans  = []
-    for j in range(0,len(s)):
-        if j % 2 != 0 :
-           ans.append(second[0])
-           second = second[1:]
-        else :
-            ans.append(first[0])
-            first = first[1:]
-    return ans
- 
+    num = []
+    for i in range(0,len(s)):
+        if i % 2 == 0:
+            num.append(first[i//2])
+        else:
+            num.append(second[i//2])
+    return num
+
 def deep_map(f, s):
     """Replace all non-list elements x with f(x) in the nested list s.
 
@@ -50,7 +48,11 @@ def deep_map(f, s):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    for i in range(0,len(s)):
+        if type(s[i]) == list:
+            deep_map(f,s[i])
+        else:
+            s[i] = f(s[i])
 
 HW_SOURCE_FILE=__file__
 
@@ -59,11 +61,13 @@ def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
     "*** YOUR CODE HERE ***"
+    return ['planet',mass]
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
     "*** YOUR CODE HERE ***"
+    return p[1]
 
 def is_planet(p):
     """Whether p is a planet."""
@@ -116,6 +120,24 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    l = end(left(m))
+    r = end(right(m))
+    llen = length(left(m))
+    rlen = length(right(m))
+    if is_planet(l) and is_planet(r):
+        return llen * total_mass(l) == rlen * total_mass(r)
+    if is_mobile(l) and is_mobile(r):
+        if not llen * total_mass(l) == rlen * total_mass(r):
+            return False
+        return balanced(l) and balanced(r)
+    if is_planet(l) and is_mobile(r):
+        if not llen * total_mass(l) == rlen * total_mass(r):
+            return False
+        return balanced(r)
+    if is_mobile(l) and is_arm(r):
+       if not llen *total_mass(l) == rlen * total_mass(r):
+           return False
+       return balanced(l)
 
 
 def berry_finder(t):

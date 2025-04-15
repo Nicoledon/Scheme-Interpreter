@@ -382,7 +382,6 @@ def time_per_word(words, timestamps_per_player):
         temp = []
         for j in range(1,len(tpp[i])):
             temp.append(tpp[i][j]-tpp[i][j-1])
-        print("DEBUG temp :",temp)
         times.append(temp)
     # END PROBLEM 9
     return {'words': words, 'times': times}
@@ -391,7 +390,6 @@ def find_min(times,player_num,word_indices):
     ans = []
     for i in player_num:
         ans.append(get_time(times,i,word_indices))
-    print("DEBUG ans:" ,min(ans))
     return min(ans)
         
 def fastest_words(words_and_times):
