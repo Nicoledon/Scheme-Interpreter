@@ -66,15 +66,15 @@ def stair_ways(n):
     """
     "*** YOUR CODE HERE ***"
     if n == 0:
-        print("DEBUG I'M IN N == 0")
         yield []
     elif n == 1:
-       yield [1]
+        yield [1]
     else :
-       for x in stair_ways(n - 1):
-           yield [1] + x
-       for y in stair_ways(n- 2):
-           yield [2] + y
+        for x in stair_ways(n - 1):
+            yield [1] + x
+        for y in stair_ways(n - 2):
+            yield [2] + y 
+    
 def yield_paths(t, value):
     """
     Yields all possible paths from the root of t to a node with the label
