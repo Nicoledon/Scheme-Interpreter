@@ -270,14 +270,12 @@ class FireAnt(Ant):
         bees_in_place =self.place.bees
         Ant.reduce_health(self,amount)
         temp_bee_list =list(bees_in_place)
-        print("DEBUG:bees_in_place",bees_in_place)
         for bee in temp_bee_list:
             if self.place is None:
                 Bee.reduce_health(bee,self.damage + amount)
             else:
                  Bee.reduce_health(bee,amount)
-                   
-              
+        
         # END Problem 5
 
 # BEGIN Problem 6
@@ -288,6 +286,33 @@ class FireAnt(Ant):
 # The HungryAnt Class
 # END Problem 7
 
+class WallAnt(Ant):
+    implemented = True
+    name = 'Wall'
+    food_cost = 4
+
+    def __init__(self, health=4):
+        """Create an Ant with a HEALTH quantity."""
+        super().__init__(health)
+class HungryAnt(Ant):
+    implemented = True
+    food_cost = 4
+    name = 'Hungry'
+    chew_cooldown = 3
+    def __init__(self, health=1):
+        """Create an Ant with a HEALTH quantity."""
+        self.cooldown = 0
+        self.chewing =  0
+        super().__init__(health)    
+    def action(self,gamestate):
+        if (self.chewing == 0 or self.cooldown == self.chew_cooldown) and len(self.place.bees) >0 :
+            bee = random_bee(self.place.bees)
+            Bee.reduce_health(bee,bee.health)
+            self.chewing = 1
+            self.cooldown = 0
+        elif self.chewing == 1:
+            self.cooldown +=1
+        
 
 class ContainerAnt(Ant):
     """
