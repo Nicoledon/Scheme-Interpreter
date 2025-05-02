@@ -40,6 +40,12 @@ class Account:
         """Return the number of years until balance would grow to amount."""
         assert self.balance > 0 and amount > 0 and self.interest > 0
         "*** YOUR CODE HERE ***"
+        money = self.balance
+        year = 0
+        while money < amount:
+              year +=1
+              money += (money * self.interest)
+        return year
 
 
 class FreeChecking(Account):
@@ -70,8 +76,12 @@ class FreeChecking(Account):
     free_withdrawals = 2
 
     "*** YOUR CODE HERE ***"
-
-
+    def withdraw(self, amount):
+        if self.free_withdrawals == 0:
+           return super().withdraw(amount + self.withdraw_fee)
+        else:
+            self.free_withdrawals -=1
+            return super().withdraw(amount)
 def without(s, i):
     """Return a new linked list like s but without the element at index i.
 
