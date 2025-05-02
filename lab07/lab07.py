@@ -82,6 +82,14 @@ class FreeChecking(Account):
         else:
             self.free_withdrawals -=1
             return super().withdraw(amount)
+def without_copy(s,t,i,count):
+    if s is Link.empty:
+       return
+    if count == i :
+        without_copy(s.rest,t,i,count + 1)
+    else:
+        t.rest = Link(s.first)
+        without_copy(s.rest,t.rest,i,count+1)
 def without(s, i):
     """Return a new linked list like s but without the element at index i.
 
@@ -96,8 +104,9 @@ def without(s, i):
     True
     """
     "*** YOUR CODE HERE ***"
-
-
+    t = Link(0)
+    without_copy(s,t,i,0)
+    return t.rest
 def duplicate_link(s, val):
     """Mutates s so that each element equal to val is followed by another val.
 
@@ -115,7 +124,15 @@ def duplicate_link(s, val):
     Link(1, Link(2, Link(2, Link(2, Link(2, Link(3))))))
     """
     "*** YOUR CODE HERE ***"
-
+    if s is Link.empty:
+        return None
+    if s.first == val:
+        temp =s.rest
+        s.rest = Link(s.fist)
+        s.rest.rest = temp
+        duplicate_link(temp,val) 
+    else:
+        duplicate_link(s.rest,val)
 
 class Link:
     """A linked list.
