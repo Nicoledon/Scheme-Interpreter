@@ -50,14 +50,18 @@ class VendingMachine:
     def __init__(self, product, price):
         """Set the product and its price, as well as other instance attributes."""
         "*** YOUR CODE HERE ***"
-
+        self.product = product
+        self.price = price 
+        self.number = 0
+        self.fund =0;
     def restock(self, n):
         """Add n to the stock and return a message about the updated stock level.
 
         E.g., Current candy stock: 3
         """
         "*** YOUR CODE HERE ***"
-
+        self.number +=n
+        return f'Current {self.product} stock: {self.number}'
     def add_funds(self, n):
         """If the machine is out of stock, return a message informing the user to restock
         (and return their n dollars).
@@ -69,7 +73,12 @@ class VendingMachine:
         E.g., Current balance: $4
         """
         "*** YOUR CODE HERE ***"
-
+        self.fund +=n
+        if self.number == 0:
+            self.fund-=n
+            return f'Nothing left to vend. Please restock. Here is your ${n}.' 
+        else:
+            return f'Current balance: ${self.fund}'
     def vend(self):
         """Dispense the product if there is sufficient stock and funds and
         return a message. Update the stock and balance accordingly.
@@ -82,7 +91,19 @@ class VendingMachine:
               Please add $3 more funds.
         """
         "*** YOUR CODE HERE ***"
-
+        if self.number == 0:
+            return 'Nothing left to vend. Please restock.'
+        if self.fund < self.price:
+            return f'Please add ${self.price - self.fund} more funds.'
+        elif self.fund == self.price:
+              self.number -=1
+              self.fund-=self.price
+              return f'Here is your {self.product}.'
+        else:
+            self.number -=1
+            diff = self.fund - self.price
+            self.fund =0
+            return f'Here is your {self.product} and ${diff} change.' 
 
 def store_digits(n):
     """Stores the digits of a positive number n in a linked list.
@@ -104,7 +125,15 @@ def store_digits(n):
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
     "*** YOUR CODE HERE ***"
-
+    head = Link(n % 10)
+    n //= 10
+    while n != 0:
+          number = n % 10
+          node = Link(number)
+          node.rest = head
+          head = node
+          n //=10
+    return head
 
 def deep_map_mut(func, s):
     """Mutates a deep link s by replacing each item found with the
@@ -126,8 +155,15 @@ def deep_map_mut(func, s):
     <9 <16> 25 36>
     """
     "*** YOUR CODE HERE ***"
-
-
+    if s is Link.empty:
+        return None
+    if isinstance(s.first,Link):
+        deep_map_mut(func,s.first)  
+    else:
+        s.first = func(s.first)
+    deep_map_mut(func,s.rest)
+def label(node):
+    return node.label
 def prune_small(t, n):
     """Prune the tree mutatively, keeping only the n branches
     of each node with the smallest labels.
@@ -145,12 +181,12 @@ def prune_small(t, n):
     >>> t3
     Tree(6, [Tree(1), Tree(3, [Tree(1), Tree(2)])])
     """
-    while ____:
-        largest = max(____, key=____)
+    while len(t.branches) > n:
+        print("DEBUG t.branches",t.branches)
+        largest = max(t.branches, key=label)
         t.branches.remove(largest)
     for b in t.branches:
-        ____
-
+        prune_small(b,n)
 
 def delete(t, x):
     """Remove all nodes labeled x below the root within Tree t. When a non-leaf
@@ -172,21 +208,20 @@ def delete(t, x):
     Tree(1, [Tree(4), Tree(5), Tree(3, [Tree(6)]), Tree(6), Tree(7), Tree(8), Tree(4)])
     """
     new_branches = []
-    for _________ in ________________:
-        _______________________
+    for b in t.branches:
+        delete(b,x)
         if b.label == x:
-            __________________________________
+            for node in b.branches:
+                new_branches.append(node)
         else:
-            __________________________________
-    t.branches = ___________________
-
-
+            new_branches.append(b)
+    t.branches = new_branches
 def two_list(vals, counts):
     """
     Returns a linked list according to the two lists that were passed in. Assume
     vals and counts are the same size. Elements in vals represent the value, and the
     corresponding element in counts represents the number of this value desired in the
-    final linked list. Assume all elements in counts are greater than 0. Assume both
+    final linked list. Assume all elements in counts are greater than 0. Assume bothb
     lists have at least one element.
     >>> a = [1, 3]
     >>> b = [1, 1]
