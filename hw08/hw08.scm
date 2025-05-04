@@ -25,4 +25,13 @@
   )
 )
 
-(define (no-repeats s))
+(define (no-repeats s) 
+ (if (null? s) 
+      nil
+      (
+         append
+           (list(car s)) 
+           (filter (lambda (x) (not (= (car s) x))) (no-repeats (cdr s)))
+      )
+ )
+)
