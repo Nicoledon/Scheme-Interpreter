@@ -70,6 +70,13 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
         "*** YOUR CODE HERE ***"
+        print("DEBUG:73 procedure.formals",procedure.formals)
+        print("DEBUG:74 procedure.body",procedure.body)
+        frame = procedure.env.make_child_frame(procedure.formals,procedure.body)
+        py_list = Pair2List(procedure.body)
+        print("DEBUG:77 procedure.env",procedure.env)
+        print("DEBUG:78 py_list",py_list)
+        return eval_all(*py_list,frame)
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
@@ -94,7 +101,13 @@ def eval_all(expressions, env):
     2
     """
     # BEGIN PROBLEM 6
-    return scheme_eval(expressions.first, env) # replace this with lines of your own code
+    if expressions is nil:
+        return None 
+    elif expressions.rest is nil:
+       return scheme_eval(expressions.first,env)
+    else:
+        scheme_eval(expressions.first,env)
+        return eval_all(expressions.rest,env)
     # END PROBLEM 6
 
 

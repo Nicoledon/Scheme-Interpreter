@@ -43,7 +43,13 @@ class Frame:
             return self.parent.lookup(symbol)
         # END PROBLEM 1
 
-
+    def make_child_frame_helper(self,formals,vals,frame):
+        if formals is nil and vals is nil:
+            return 
+        else:
+            frame.define(formals.first,vals.first)
+        self.make_child_frame_helper(formals.rest,vals.rest,frame)
+    
     def make_child_frame(self, formals, vals):
         """Return a new local frame whose parent is SELF, in which the symbols
         in a Scheme list of formal parameters FORMALS are bound to the Scheme
@@ -59,6 +65,9 @@ class Frame:
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
         "*** YOUR CODE HERE ***"
+        frame = Frame(self)
+        self.make_child_frame_helper(formals,vals,frame)        
+        return frame
         # END PROBLEM 8
 
 ##############
