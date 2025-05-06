@@ -38,11 +38,8 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
         # BEGIN PROBLEM 3
         "*** YOUR CODE HERE ***"
         first = scheme_eval(first,env)
-        print("DEBUG:41",first)
         helper = scheme_eval_helper(env)
-        print("DEBUG:43",helper)
         agruments = rest.map(helper)
-        print("DEBUG:45",agruments)
         return scheme_apply(first,agruments,env)
         # END PROBLEM 3
 def Pair2List(args):

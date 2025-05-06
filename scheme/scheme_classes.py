@@ -34,10 +34,8 @@ class Frame:
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
-        print("DEBUG:37 symbol",symbol)
         #print("DEBUG:38 bindings",self.bindings)
         if symbol in self.bindings:
-            print("DEBUG:40",self.bindings[symbol])
             return self.bindings[symbol]
         elif self.parent is None:
              raise SchemeError('unknown identifier: {0}'.format(symbol))
