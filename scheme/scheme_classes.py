@@ -87,7 +87,6 @@ class LambdaProcedure(Procedure):
         whose body is the Scheme list BODY, and whose parent environment
         starts with Frame ENV."""
         assert isinstance(env, Frame), "env must be of type Frame"
-
         from scheme_utils import validate_type, scheme_listp
         validate_type(formals, scheme_listp, 0, 'LambdaProcedure')
         validate_type(body, scheme_listp, 1, 'LambdaProcedure')

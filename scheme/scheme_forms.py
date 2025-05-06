@@ -42,7 +42,6 @@ def do_define_form(expressions, env):
             value = scheme_eval(expressions.rest.first,env) 
         else:
             value = expressions.rest.first
-        print("DEBUG:value:",value)
         env.define(signature,value)
         return signature
         # END PROBLEM 4
@@ -65,6 +64,7 @@ def do_quote_form(expressions, env):
     validate_form(expressions, 1, 1)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    return expressions.first
     # END PROBLEM 5
 
 def do_begin_form(expressions, env):
