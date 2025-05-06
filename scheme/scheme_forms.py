@@ -11,7 +11,13 @@ from scheme_builtins import *
 # its first argument---a Scheme list representing a special form without the
 # initial identifying symbol (if, lambda, quote, ...). Its second argument is
 # the environment in which the form is to be evaluated.
-
+def check_style(formals):
+    if formals is nil:
+        return True
+    elif type(formals.first) is int:
+         raise SchemeError('Error') 
+    else:
+        return check_style(formals.rest)
 def do_define_form(expressions, env):
     """Evaluate a define form.
     >>> env = create_global_frame()
@@ -49,6 +55,10 @@ def do_define_form(expressions, env):
         # defining a named procedure e.g. (define (f x y) (+ x y))
         # BEGIN PROBLEM 10
         "*** YOUR CODE HERE ***"
+        frame = LambdaProcedure(signature.rest,expressions.rest,env)
+        check_style(signature.rest)
+        env.define(signature.first,frame)
+        return signature.first
         # END PROBLEM 10
     else:
         bad_signature = signature.first if isinstance(signature, Pair) else signature
@@ -230,6 +240,7 @@ def do_mu_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 11
     "*** YOUR CODE HERE ***"
+    return MuProcedure(formals,expressions.rest)
     # END PROBLEM 11
 
 

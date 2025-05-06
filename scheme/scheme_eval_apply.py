@@ -51,6 +51,8 @@ def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
     Frame ENV, the current environment."""
     validate_procedure(procedure)
+    print("DEBUG:args",args)
+    print("DEBUG:procedure",procedure)
     if not isinstance(env, Frame):
        assert False, "Not a Frame: {}".format(env)
     if isinstance(procedure, BuiltinProcedure):
@@ -70,17 +72,22 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
         "*** YOUR CODE HERE ***"
-        print("DEBUG:73 procedure.formals",procedure.formals)
-        print("DEBUG:74 procedure.body",procedure.body)
+        print("DEBUG:procedure.env",procedure.env)
+        print("DEBUG:procedure.formals",procedure.formals)
+        print("DEBUG:procedure.body",procedure.body)
+        #print("DEBUG:t",procedure.env.make_child_frame)
         frame = procedure.env.make_child_frame(procedure.formals,procedure.body)
+        print("DEBUG:frame",frame)
         py_list = Pair2List(procedure.body)
-        print("DEBUG:77 procedure.env",procedure.env)
-        print("DEBUG:78 py_list",py_list)
         return eval_all(*py_list,frame)
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
+        print("DEBUG:80 formals",procedure.formals)
+        print("DEBUG:81 body",procedure.body)
+        frame = env.make_child_frame(procedure.formals,procedure.body)
+        py_list = Pair2List(procedure.body)
         # END PROBLEM 11
     else:
         assert False, "Unexpected procedure: {}".format(procedure)
