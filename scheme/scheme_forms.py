@@ -222,18 +222,21 @@ def make_let_frame(bindings, env):
     names = vals = nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
-    print("DEBUG:bindings",bindings) 
+    symbols = set()
     while bindings is not nil:
-          print("DEBUG:bindings.first",bindings.first.first) 
-          print("DEBUG:bindings.rest",bindings.first.rest.first) 
+          if bindings.first.first in symbols:
+             raise SchemeError("ERROR")
+          print("DEBUG:bindings.first",bindings.first)
+          if type(bindings.first.first) == int :
+              raise SchemeError("ERROR") 
+          validate_form(bindings.first,2,2)      
+          symbols.add(bindings.first.first)
           temp = Pair(bindings.first.first,names)
           names = temp
           temp = Pair(scheme_eval(bindings.first.rest.first,env),vals)
           vals = temp
           bindings = bindings.rest
     # END PROBLEM 14
-    print("DEBUG:name",names)
-    print("DEBUG:vals",vals)
     return env.make_child_frame(names, vals)
 
 

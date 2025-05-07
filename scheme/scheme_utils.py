@@ -93,6 +93,7 @@ def validate_formals(formals):
     >>> validate_formals(read_line('(a b c)'))
     """
     symbols = set()
+    print("DEBUG:formals",formals)
     def validate_and_add(symbol, is_last):
         if not scheme_symbolp(symbol):
             raise SchemeError('non-symbol: {0}'.format(symbol))
