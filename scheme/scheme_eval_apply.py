@@ -78,8 +78,8 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
         "*** YOUR CODE HERE ***"
-        frame = procedure.env.make_child_frame(procedure.formals,procedure.body)
-        py_list = Pair2List(procedure.body)
+        print("DEBUG:procedure.formals",procedure.formals)
+        print("DEBUG:procedure.body",procedure.body)
         # END PROBLEM 11
     else:
         assert False, "Unexpected procedure: {}".format(procedure)
