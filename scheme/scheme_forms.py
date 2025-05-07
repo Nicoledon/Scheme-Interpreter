@@ -81,7 +81,6 @@ def do_quote_form(expressions, env):
 
 def do_begin_form(expressions, env):
     """Evaluate a begin form.
-
     >>> env = create_global_frame()
     >>> x = do_begin_form(read_line("((print 2) 3)"), env) # evaluating (begin (print 2) 3)
     2
@@ -242,6 +241,7 @@ def do_mu_form(expressions, env):
     validate_formals(formals)
     # BEGIN PROBLEM 11
     "*** YOUR CODE HERE ***"
+    return MuProcedure(expressions.first,expressions.rest) 
     # END PROBLEM 11
 
 
