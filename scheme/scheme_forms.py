@@ -194,8 +194,8 @@ def do_cond_form(expressions, env):
             # BEGIN PROBLEM 13
             "*** YOUR CODE HERE ***"
             if expressions.first.rest is nil:
-                print("DEBUG:expressions.first",expressions.first.first)
-                return scheme_eval(expressions.first.first,env)
+                print("DEBUG:expressions.first",expressions.first)
+                return test
             else:
                 return eval_all(expressions.first.rest,env)
             # END PROBLEM 13
