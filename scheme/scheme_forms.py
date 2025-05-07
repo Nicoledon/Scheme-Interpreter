@@ -137,6 +137,18 @@ def do_and_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***" 
+    if expressions is nil:
+        return True
+    elif expressions.rest is nil:
+        value =  scheme_eval(expressions.first,env)
+        if is_scheme_true(value):
+            return value
+        else :
+            return False
+    elif is_scheme_false(scheme_eval(expressions.first,env)):
+         return False
+    else:
+        return do_and_form(expressions.rest,env)
     # END PROBLEM 12
 
 def do_or_form(expressions, env):
@@ -155,6 +167,12 @@ def do_or_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    if expressions is nil:
+        return False
+    elif is_scheme_true(scheme_eval(expressions.first,env)):
+         return scheme_eval(expressions.first,env)
+    else:
+        return do_or_form(expressions.rest,env)
     # END PROBLEM 12
 
 def do_cond_form(expressions, env):
@@ -175,6 +193,11 @@ def do_cond_form(expressions, env):
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
             "*** YOUR CODE HERE ***"
+            if expressions.first.rest is nil:
+                print("DEBUG:expressions.first",expressions.first.first)
+                return scheme_eval(expressions.first.first,env)
+            else:
+                return eval_all(expressions.first.rest,env)
             # END PROBLEM 13
         expressions = expressions.rest
 
